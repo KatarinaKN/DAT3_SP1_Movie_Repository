@@ -4,7 +4,7 @@ import app.entities.Movie;
 import jakarta.persistence.EntityManagerFactory;
 
 public class MovieDAO extends GenericDAO<Movie, Long> {
-    public MovieDAO(EntityManagerFactory emf, Class<Movie> entityClass) {
-        super(emf, entityClass);
+    public MovieDAO(EntityManagerFactory emf) {
+        super(emf, Movie.class);
     }
 }
