@@ -74,6 +74,8 @@ class GenericDAOTest {
         emf.close();
     }
 
+
+
     @Test
     void create() {
         //create movie
@@ -144,6 +146,9 @@ class GenericDAOTest {
         ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(movie1.getID()));
         assertThat(ex.getCode(), is(HttpStatus.NOT_FOUND.value()));
     }
+
+
+    //Exceptions
 
     @Test
     void create_withNullMovie_throwsApiException() {

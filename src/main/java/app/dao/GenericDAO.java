@@ -4,10 +4,12 @@ import app.entities.IEntity;
 import app.exceptions.ApiException;
 import jakarta.persistence.*;
 import org.springframework.http.HttpStatus;
-
 import java.util.List;
 
 public class GenericDAO<T extends IEntity, ID> {
+    //Status code overview link:
+    // https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html
+
     private final EntityManagerFactory emf;
     private Class<T> entityClass;
 
@@ -139,6 +141,7 @@ public class GenericDAO<T extends IEntity, ID> {
                 throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get " + entityClass.getSimpleName()
                         + "has failed with error message" + e.getMessage());
             }
-        }
+        } //stream rækkefølge af score.
     }
+
 }
