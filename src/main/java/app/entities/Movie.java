@@ -58,9 +58,22 @@ public class Movie implements IEntity {
         this.averageRating = averageRating;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setRelease_date(LocalDate release_date) {
+        this.release_date = release_date;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
     @Override
     public Long getID() {
         return this.id;
     }
+
 
 }

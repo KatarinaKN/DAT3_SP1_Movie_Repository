@@ -79,7 +79,51 @@ class GenericDAOTest {
         Movie fetched = movieDAO.read(created.getID());
 
         assertThat(fetched.getTitle(), is("Blinkende Lygter"));
+        assertThat(fetched.getID(), is(created.getID()));
+    }
 
+    @Test
+    void readAll() {
+
+        //create movies
+        movieDAO.create(movie1);
+        movieDAO.create(movie2);
+        movieDAO.create(movie3);
+
+        //get movies
+        List<Movie> allMovies = movieDAO.readAll();
+
+        //Test
+        assertThat(allMovies, hasSize(3));
+    }
+
+    @Test
+    void update() {
+        //create movie
+        movieDAO.create(movie1);
+        assertThat(movie1.getID(), notNullValue());
+        Movie fetchedMovie1 = movieDAO.read(movie1.getID());
+
+        //Same id
+        assertThat(fetchedMovie1.getID(), is(movie1.getID()));
+
+        //Update user 1
+        fetchedMovie1.setAverageRating(8);
+        fetchedMovie1.setRelease_date(LocalDate.of(1998, 4, 27));
+        fetchedMovie1.setTitle("Peter Plys");
+
+        //Update
+        movieDAO.update(fetchedMovie1);
+
+        //Get updated user 1
+        Movie fetchedUpdated = movieDAO.read(fetchedMovie1.getID());
+        assertThat(fetchedUpdated.getID(), is(fetchedMovie1.getID()));
+
+        //Compare user 1 updated to non updated
+        //Not the same
+        assertThat(fetchedMovie1, not(fetchedUpdated));
+        //Same ID
+        assertThat(fetchedMovie1.getID(), is(fetchedUpdated.getID()));
     }
 
 
