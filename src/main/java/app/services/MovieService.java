@@ -1,0 +1,53 @@
+package app.services;
+
+import app.dtos.MovieDTO;
+import app.dtos.MovieIdDTO;
+import app.dtos.MovieSearchResultDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MovieService {
+
+    private final APIService apiService = new APIService();
+
+    //Henter id på danske film fra de sidste fem år.
+    //TODO man kunne godt sætte dato og oprindelsesland som parametre i metodesignaturen, hvis man synes...
+    public List<MovieIdDTO> getMovieIds() {
+        List<MovieIdDTO> movieIds = new ArrayList<>();
+
+        int page = 1;
+        int totalPages = 1;
+
+        while (page <= totalPages) {
+            String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + System.getenv("API_KEY")
+                    + "&release_date.gte=2021-09-14"
+                    + "&with_origin_country=DK"
+                    + "&page=" + page;
+
+            MovieSearchResultDTO result = apiService.fetchAndConvert(url, MovieSearchResultDTO.class);
+            movieIds.addAll(result.getMovieIds());
+            totalPages = result.getTotalPages();
+            page ++;
+        }
+
+        return movieIds;
+    }
+
+    //Henter data på film ud fra id.
+    public List<MovieDTO> getMovies() {
+        List<MovieDTO> allMovies = new ArrayList<>();
+
+        for (MovieIdDTO movieId : getMovieIds()) {
+            long id = movieId.getId();
+
+            String url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + System.getenv("API_KEY")
+                    + "&append_to_response=credits";
+
+            MovieDTO result = apiService.fetchAndConvert(url, MovieDTO.class);
+            allMovies.add(result);
+        }
+
+        return allMovies;
+    }
+}
