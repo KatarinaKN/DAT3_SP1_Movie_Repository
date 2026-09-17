@@ -43,9 +43,11 @@ public class MovieService {
         List<MovieDTO> allMovies = new ArrayList<>();
         List<MovieIdDTO> movieIdDTOS = getMovieIds();
 
-       // for (MovieIdDTO movieId : movieIdDTOS)
-        for (int i = 1; i < 3; i++){
-            int id = movieIdDTOS.getFirst().getId();
+       for (MovieIdDTO movieId : movieIdDTOS) {
+        //For-loop sat ind for at teste, om vi kan skrive tre sider ud. Programmet crashede, da vi prøvede at køre
+        //alle 85 sider med data
+        //for (int i = 1; i < 3; i++){
+            int id = movieId.getId();
 
             String url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + System.getenv("API_KEY")
                     + "&append_to_response=credits";
