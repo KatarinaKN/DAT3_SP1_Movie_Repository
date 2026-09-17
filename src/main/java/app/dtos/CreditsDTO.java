@@ -1,11 +1,9 @@
 package app.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -13,10 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieSearchResultDTO {
+public class CreditsDTO {
 
-    private List<MovieIdDTO> results;
-    @JsonProperty("total_pages")
-    private int totalPages;
-
+    private List<ActorDTO> cast;
+    private List<CrewMemberDTO> crew;
 }

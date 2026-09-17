@@ -16,8 +16,7 @@ import java.util.Set;
 @ToString
 public class Genre implements IEntity {
     @Id
-    private Long id;
-
+    private long id;
     private String name;
 
     @ManyToMany(mappedBy = "genres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

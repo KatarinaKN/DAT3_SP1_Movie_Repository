@@ -1,6 +1,5 @@
 package app.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +16,11 @@ import java.util.Set;
 @ToString
 public class Movie implements IEntity {
     @Id
-    private Long id;
+    private long id;
 
     private String title;
-    LocalDate release_date;
-
+    private LocalDate releaseDate;
+    private double popularity;
     private double averageRating;
 
     //Mange film har en instruktør
@@ -53,10 +52,11 @@ public class Movie implements IEntity {
     @ToString.Exclude
     private Set<Genre> genres = new HashSet<>();
 
-    public Movie(Long id, String title, LocalDate release_date, double averageRating, Director director, Set<Actor> actors, Set<Genre> genres) {
+    public Movie(Long id, String title, LocalDate releaseDate, double popularity, double averageRating, Director director, Set<Actor> actors, Set<Genre> genres) {
         this.id = id;
         this.title = title;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
+        this.popularity = popularity;
         this.averageRating = averageRating;
         this.director = director;
         this.actors = actors;

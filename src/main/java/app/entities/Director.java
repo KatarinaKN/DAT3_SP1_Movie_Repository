@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class Director implements IEntity {
     @Id
-    private Long id;
+    private long id;
 
     private String name;
 
