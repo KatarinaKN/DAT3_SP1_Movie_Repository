@@ -43,35 +43,33 @@ public class GenericDAO<T extends IEntity, ID> {
     }
 
     public T update(T t) {
-        //handles if t is missing
         if (t == null) {
-            throw new ApiException(HttpStatus.BAD_REQUEST.value(), entityClass.getSimpleName() + " id is required");
+            throw new ApiException(HttpStatus.BAD_REQUEST.value(),
+                    entityClass.getSimpleName() + " id is required");
         }
         T merged = null;
         try (EntityManager entityManager = emf.createEntityManager()) {
             entityManager.getTransaction().begin();
-
             try {
-                //If id is null
                 T existing = entityManager.find(entityClass, t.getID());
                 if (existing == null) {
-                    throw new ApiException(HttpStatus.NOT_FOUND.value(), entityClass.getSimpleName() + "' ID could not be found");
-                }try {
-                    merged = entityManager.merge(t);
-                    entityManager.getTransaction().commit();
-                } catch (PersistenceException e) {
-                    if (entityManager.getTransaction().isActive()) {
-                        entityManager.getTransaction().rollback();
-                    }
-                    throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Update " + entityClass.getSimpleName()
-                            + " failed with error message: " + e.getMessage());
-                } catch (RuntimeException e) {
-                    if (entityManager.getTransaction().isActive()) {
-                        entityManager.getTransaction().rollback();
-                    }
+                    throw new ApiException(HttpStatus.NOT_FOUND.value(),
+                            entityClass.getSimpleName() + " ID could not be found");
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                merged = entityManager.merge(t);
+                entityManager.getTransaction().commit();
+            } catch (PersistenceException e) {
+                if (entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().rollback();
+                }
+                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                        "Update " + entityClass.getSimpleName()
+                                + " failed with error message: " + e.getMessage());
+            } catch (RuntimeException e) {
+                if (entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().rollback();
+                }
+                throw e;
             }
         }
         return merged;

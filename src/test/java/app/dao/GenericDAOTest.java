@@ -3,6 +3,7 @@ package app.dao;
 
 import app.config.HibernateTestConfig;
 import app.entities.Movie;
+import app.exceptions.ApiException;
 import com.fasterxml.jackson.annotation.JacksonInject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -44,6 +45,10 @@ class GenericDAOTest {
             "Klovn - The Movie",
             LocalDate.of(2010, 9, 24),
             7.6
+    );
+
+    Movie missing = new Movie(
+
     );
 
 
@@ -126,8 +131,49 @@ class GenericDAOTest {
         assertThat(fetchedMovie1.getID(), is(fetchedUpdated.getID()));
     }
 
+    @Test
+    void delete() {
+        //create movie
+        movieDAO.create(movie1);
+        assertThat(movie1.getID(), notNullValue());
+        Movie fetchedMovie1 = movieDAO.read(movie1.getID());
 
+        boolean deleted = movieDAO.delete(fetchedMovie1.getID());
 
+        assertThat(deleted, is(true));
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(movie1.getID()));
+        assertThat(ex.getCode(), is(HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Test
+    void create_withNullMovie_throwsApiException() {
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.create(null));
+        assertThat(ex.getCode(), is(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @Test
+    void read_withNullMovie_throwsApiException() {
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(null));
+        assertThat(ex.getCode(), is(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @Test
+    void read_withMissingId_throwsApiException() {
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(5L));
+        assertThat(ex.getCode(), is(HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Test
+    void update_withNullMovie_throwsApiException() {
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.update(null));
+        assertThat(ex.getCode(), is(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @Test
+    void delete_withNullId_throwsApiException() {
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.delete(null));
+        assertThat(ex.getCode(), is(HttpStatus.BAD_REQUEST.value()));
+    }
 
 }
 
