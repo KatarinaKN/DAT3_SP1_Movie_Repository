@@ -22,10 +22,10 @@ public class MovieDAO extends GenericDAO<Movie, Integer> {
         List<Movie> movieList = readAll();
 
          return movieList.stream()
-                 .limit(10)
                  .sorted(
                          Comparator.comparing(Movie::getAverageRating)
                                  .reversed())
+                 .limit(10)
                  .toList();
     }
 
@@ -36,11 +36,11 @@ public class MovieDAO extends GenericDAO<Movie, Integer> {
     public List<Movie> sortByLowestRating(){
         List<Movie> movieList = readAll();
 
-        return movieList.stream().
-                limit(10)
+        return movieList.stream()
                 .sorted(
-                        Comparator.comparing(Movie::getAverageRating)).
-                toList();
+                        Comparator.comparing(Movie::getAverageRating))
+                .limit(10)
+                .toList();
 
     }
 
