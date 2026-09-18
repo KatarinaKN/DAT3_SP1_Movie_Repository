@@ -9,6 +9,7 @@ import app.entities.Genre;
 import app.entities.Movie;
 import app.exceptions.ApiException;
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -65,15 +66,16 @@ public class EntityService {
 
     private Director convertToDirectorEntity(MovieDTO movieDTO) {
         List<CrewMemberDTO> crewMemberDTOS = movieDTO.getCredits().getCrew();
-        int directorDTOId = crewMemberDTOS.stream()
-                .filter(crewMemberDTO -> "Director".equals(crewMemberDTO.getJob()))
-                .mapToInt(crewMemberDTO -> crewMemberDTO.getId()).sum();
 
-        String directorDTOName = crewMemberDTOS.stream()
-                .filter(crewMemberDTO -> "Director".equals(crewMemberDTO.getJob()))
-                .map(crewMemberDTO -> crewMemberDTO.getName()).toString();
-
-        return getOrCreateDirector(directorDTOId, directorDTOName);
+      return  crewMemberDTOS.stream()
+                //Filter to get director
+                .filter(crew -> "Director".equals(crew.getJob()))
+                //Get the a director
+                .findFirst()
+                //get id and name to create a director
+                .map(director-> getOrCreateDirector(director.getId(), director.getName()))
+                //returns 404 if nothing was found
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND.value(), "No director was found for movie: " + movieDTO.getTitle()));
     }
 
     private Director getOrCreateDirector(int id, String name) {
