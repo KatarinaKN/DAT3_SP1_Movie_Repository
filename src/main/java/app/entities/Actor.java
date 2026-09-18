@@ -15,7 +15,7 @@ import java.util.Set;
 @ToString
 public class Actor implements IEntity {
     @Id
-    private long id;
+    private int id;
 
     private String name;
 
@@ -23,13 +23,13 @@ public class Actor implements IEntity {
     @ToString.Exclude
     private Set<Movie> movies   = new HashSet<>();
 
-    public Actor(Long id, String name) {
+    public Actor(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     @Override
-    public Long getID() {
+    public int getID() {
         return this.id;
     }
 }

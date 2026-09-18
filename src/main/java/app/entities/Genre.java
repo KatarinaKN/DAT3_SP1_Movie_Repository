@@ -16,20 +16,20 @@ import java.util.Set;
 @ToString
 public class Genre implements IEntity {
     @Id
-    private long id;
+    private int id;
     private String name;
 
     @ManyToMany(mappedBy = "genres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
     private Set<Movie> movies   = new HashSet<>();
 
-    public Genre(Long id, String name) {
+    public Genre(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     @Override
-    public Long getID() {
+    public int getID() {
         return this.id;
     }
 }

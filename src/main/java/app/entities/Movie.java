@@ -16,7 +16,7 @@ import java.util.Set;
 @ToString
 public class Movie implements IEntity {
     @Id
-    private long id;
+    private int id;
 
     private String title;
     private LocalDate releaseDate;
@@ -52,7 +52,7 @@ public class Movie implements IEntity {
     @ToString.Exclude
     private Set<Genre> genres = new HashSet<>();
 
-    public Movie(Long id, String title, LocalDate releaseDate, double popularity, double averageRating, Director director, Set<Actor> actors, Set<Genre> genres) {
+    public Movie(int id, String title, LocalDate releaseDate, double popularity, double averageRating, Director director, Set<Actor> actors, Set<Genre> genres) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -64,7 +64,7 @@ public class Movie implements IEntity {
     }
 
     //For test, can be deleted if needed
-    public Movie(Long id, String title, LocalDate releaseDate, double averageRating) {
+    public Movie(int id, String title, LocalDate releaseDate, double averageRating) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -84,7 +84,7 @@ public class Movie implements IEntity {
     }
 
     @Override
-    public Long getID() {
+    public int getID() {
         return this.id;
     }
 
