@@ -63,9 +63,30 @@ public class Movie implements IEntity {
         this.genres = genres;
     }
 
+    //For test, can be deleted if needed
+    public Movie(Long id, String title, LocalDate release_date, double averageRating) {
+        this.id = id;
+        this.title = title;
+        this.release_date = release_date;
+        this.averageRating = averageRating;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setRelease_date(LocalDate release_date) {
+        this.release_date = release_date;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
     @Override
     public Long getID() {
         return this.id;
     }
+
 
 }
