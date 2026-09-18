@@ -4,7 +4,7 @@ import app.entities.Actor;
 import app.entities.Movie;
 import jakarta.persistence.EntityManagerFactory;
 
-public class ActorDAO extends GenericDAO<Actor, Long> {
+public class ActorDAO extends GenericDAO<Actor, Integer> {
     public ActorDAO(EntityManagerFactory emf) {
         super(emf, Actor.class);
     }

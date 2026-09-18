@@ -27,21 +27,21 @@ class GenericDAOTest {
 
     //Test Entities
     Movie movie1 = new Movie(
-            1L,
+            1,
             "Blinkende Lygter",
             LocalDate.of(2000, 9, 29),
             7.2
     );
 
     Movie movie2 = new Movie(
-            2L,
+            2,
             "I Kina Spiser De Hunde",
             LocalDate.of(1999, 9, 24),
             7.4
     );
 
     Movie movie3 = new Movie(
-            3L,
+            3,
             "Klovn - The Movie",
             LocalDate.of(2010, 9, 24),
             7.6
@@ -164,7 +164,7 @@ class GenericDAOTest {
 
     @Test
     void read_withMissingId_throwsApiException() {
-        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(5L));
+        ApiException ex = assertThrows(ApiException.class, () -> movieDAO.read(5));
         assertThat(ex.getCode(), is(HttpStatus.NOT_FOUND.value()));
     }
 

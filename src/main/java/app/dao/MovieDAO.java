@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MovieDAO extends GenericDAO<Movie, Long> {
+public class MovieDAO extends GenericDAO<Movie, Integer> {
     public MovieDAO(EntityManagerFactory emf) {
         super(emf, Movie.class);
     }

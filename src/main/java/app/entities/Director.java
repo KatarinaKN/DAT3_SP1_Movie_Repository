@@ -14,12 +14,12 @@ import lombok.ToString;
 @ToString
 public class Director implements IEntity {
     @Id
-    private long id;
+    private int id;
 
     private String name;
 
     @Override
-    public Long getID() {
+    public int getID() {
         return this.id;
     }
 }
