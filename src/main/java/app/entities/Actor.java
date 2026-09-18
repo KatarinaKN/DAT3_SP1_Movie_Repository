@@ -19,7 +19,7 @@ public class Actor implements IEntity {
 
     private String name;
 
-    @ManyToMany(mappedBy = "actors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "actors", cascade = {CascadeType.MERGE})
     @ToString.Exclude
     private Set<Movie> movies   = new HashSet<>();
 

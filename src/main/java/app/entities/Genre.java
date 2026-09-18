@@ -19,7 +19,7 @@ public class Genre implements IEntity {
     private int id;
     private String name;
 
-    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.MERGE})
     @ToString.Exclude
     private Set<Movie> movies   = new HashSet<>();
 

@@ -24,13 +24,13 @@ public class Movie implements IEntity {
     private double averageRating;
 
     //Mange film har en instruktør
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "director_id")
     @ToString.Exclude
     private Director director;
 
     //Mange film har mange skuespillere
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             //Navn på koblingstabel er movie_actor
             name = "movie_actor",
@@ -42,7 +42,7 @@ public class Movie implements IEntity {
     private Set<Actor> actors = new HashSet<>();
 
     //Mange film har mange genrer
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             //Navn på koblingstabel er movie_genre. Det er standardkonvetion i JPA/SQL at navngive sådan
             name = "movie_genre",
