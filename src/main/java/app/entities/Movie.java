@@ -64,10 +64,10 @@ public class Movie implements IEntity {
     }
 
     //For test, can be deleted if needed
-    public Movie(Long id, String title, LocalDate release_date, double averageRating) {
+    public Movie(Long id, String title, LocalDate releaseDate, double averageRating) {
         this.id = id;
         this.title = title;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
         this.averageRating = averageRating;
     }
 
@@ -76,7 +76,7 @@ public class Movie implements IEntity {
     }
 
     public void setRelease_date(LocalDate release_date) {
-        this.release_date = release_date;
+        this.releaseDate = release_date;
     }
 
     public void setAverageRating(double averageRating) {
