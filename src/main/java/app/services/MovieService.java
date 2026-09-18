@@ -14,7 +14,6 @@ public class MovieService {
     private final APIService apiService = new APIService();
 
     //Henter id på danske film fra de sidste fem år.
-    //TODO man kunne godt sætte dato og oprindelsesland som parametre i metodesignaturen, hvis man synes...
     private List<MovieIdDTO> getMovieIds() {
         List<MovieIdDTO> movieIds = new ArrayList<>();
 
@@ -24,7 +23,7 @@ public class MovieService {
         while (page <= totalPages) {
             System.out.println("Henter side " + page + " af " + totalPages);
             String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + System.getenv("API_KEY")
-                    + "&release_date.gte=2021-09-14"
+                    + "&primary_release_date.gte=2021-09-14"
                     + "&with_origin_country=DK"
                     + "&page=" + page;
 
@@ -58,16 +57,4 @@ public class MovieService {
 
         return allMovies;
     }
-
-
-    private DirectorDTO extractDirector(MovieDTO movieDTO) {
-        return movieDTO.getCredits().getCrew().stream()
-                .filter(c -> "Director".equals(c.getJob()))
-                .findFirst()
-                .map(c -> new DirectorDTO(c.getId(), c.getName()))
-                .orElse(null);
-    }
-
-
-    //DirectorDTO director = extractDirector(movieDTO);
 }
