@@ -32,7 +32,7 @@ public class MovieService {
 
             movieIds.addAll(result.getResults());
             totalPages = result.getTotalPages();
-            page ++;
+            page++;
         }
 
         return movieIds;
@@ -43,10 +43,10 @@ public class MovieService {
         List<MovieDTO> allMovies = new ArrayList<>();
         List<MovieIdDTO> movieIdDTOS = getMovieIds();
 
-       for (MovieIdDTO movieId : movieIdDTOS) {
-        //For-loop sat ind for at teste, om vi kan skrive tre sider ud. Programmet crashede, da vi prøvede at køre
-        //alle 85 sider med data
-        //for (int i = 1; i < 3; i++){
+        for (MovieIdDTO movieId : movieIdDTOS) {
+            //For-loop sat ind for at teste, om vi kan skrive tre sider ud. Programmet crashede, da vi prøvede at køre
+            //alle 85 sider med data
+            // for (int i = 1; i < 3; i++) {
             int id = movieId.getId();
 
             String url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + System.getenv("API_KEY")
@@ -59,6 +59,7 @@ public class MovieService {
         return allMovies;
     }
 
+
     private DirectorDTO extractDirector(MovieDTO movieDTO) {
         return movieDTO.getCredits().getCrew().stream()
                 .filter(c -> "Director".equals(c.getJob()))
@@ -66,6 +67,7 @@ public class MovieService {
                 .map(c -> new DirectorDTO(c.getId(), c.getName()))
                 .orElse(null);
     }
+
 
     //DirectorDTO director = extractDirector(movieDTO);
 }

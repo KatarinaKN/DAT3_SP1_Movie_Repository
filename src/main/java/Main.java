@@ -1,11 +1,9 @@
-import app.services.MovieService;
+import app.AppRunner;
 
 public class Main {
-    static void main() {
 
-        MovieService movieService = new MovieService();
-
-        System.out.println(movieService.getMovies());
-
+    public static void main(String[] args) {
+        AppRunner appRunner = new AppRunner();
+        appRunner.run();
     }
 }
