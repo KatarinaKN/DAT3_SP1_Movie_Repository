@@ -75,8 +75,8 @@ public class Movie implements IEntity {
         this.title = title;
     }
 
-    public void setRelease_date(LocalDate release_date) {
-        this.releaseDate = release_date;
+    public void setRelease_date(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public void setAverageRating(double averageRating) {
