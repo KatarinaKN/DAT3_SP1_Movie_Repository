@@ -1,10 +1,14 @@
 package app.services;
 
+import app.config.HibernateConfig;
+import app.dao.GenericDAO;
 import app.dtos.*;
 import app.entities.Actor;
 import app.entities.Director;
 import app.entities.Genre;
 import app.entities.Movie;
+import app.exceptions.ApiException;
+import jakarta.persistence.EntityManagerFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +20,10 @@ public class EntityService {
 
     private final MovieService movieService = new MovieService();
     private final List<MovieDTO> movieDTOS = movieService.getMovies();
+    private final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private final GenericDAO<Genre, Integer> genreDAO = new GenericDAO<>(emf, Genre.class);
+    private final GenericDAO<Actor, Integer> actorDAO = new GenericDAO<>(emf, Actor.class);
+    private final GenericDAO<Director, Integer> directorDAO = new GenericDAO<>(emf, Director.class);
 
     public List<Movie> convertToMovieEntities() {
         List<Movie> movies = new ArrayList<>();
@@ -41,8 +49,7 @@ public class EntityService {
         List<GenreDTO> genreDTOS = movieDTO.getGenres();
         Set<Genre> genres = new HashSet<>();
         for (GenreDTO genreDTO : genreDTOS) {
-            Genre genre = new Genre(genreDTO.getId(), genreDTO.getName());
-            genres.add(genre);
+            genres.add(getOrCreateGenre(genreDTO));
         }
         return genres;
     }
@@ -51,8 +58,7 @@ public class EntityService {
         List<ActorDTO> actorDTOS = movieDTO.getCredits().getCast();
         Set<Actor> actors = new HashSet<>();
         for (ActorDTO actorDTO : actorDTOS) {
-            Actor actor = new Actor(actorDTO.getId(), actorDTO.getName());
-            actors.add(actor);
+            actors.add(getOrCreateActor(actorDTO));
         }
         return actors;
     }
@@ -67,6 +73,42 @@ public class EntityService {
                 .filter(crewMemberDTO -> "Director".equals(crewMemberDTO.getJob()))
                 .map(crewMemberDTO -> crewMemberDTO.getName()).toString();
 
-        return new Director(directorDTOId, directorDTOName);
+        return getOrCreateDirector(directorDTOId, directorDTOName);
+    }
+
+    private Director getOrCreateDirector(int id, String name) {
+        try {
+            return directorDAO.read(id);
+        } catch (ApiException e) {
+            if (e.getCode() != 404) {
+                throw e;
+            }
+            Director newDirector = new Director(id, name);
+            return directorDAO.create(newDirector);
+        }
+    }
+
+    private Genre getOrCreateGenre(GenreDTO genreDTO) {
+        try {
+            return genreDAO.read(genreDTO.getId());
+        } catch (ApiException e){
+            if (e.getCode() != 404) {
+                throw e;
+            }
+            Genre newGenre = new Genre(genreDTO.getId(), genreDTO.getName());
+            return genreDAO.create(newGenre);
+        }
+    }
+
+    private Actor getOrCreateActor(ActorDTO actorDTO) {
+        try {
+            return actorDAO.read(actorDTO.getId());
+        } catch (ApiException e){
+            if (e.getCode() != 404) {
+                throw e;
+            }
+            Actor newActor = new Actor(actorDTO.getId(), actorDTO.getName());
+            return actorDAO.create(newActor);
+        }
     }
 }
