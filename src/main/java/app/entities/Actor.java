@@ -15,7 +15,7 @@ import java.util.Set;
 @ToString
 public class Actor implements IEntity {
     @Id
-    private Long id;
+    private long id;
 
     private String name;
 
