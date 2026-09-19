@@ -1,10 +1,7 @@
 package app.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,15 +11,19 @@ import java.util.Set;
 @Table(name = "movies")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString
 public class Movie implements IEntity {
     @Id
     private int id;
 
+    @Setter
     private String title;
+    @Setter
     private LocalDate releaseDate;
     private double popularity;
+    @Setter
     private double averageRating;
 
     //Mange film har en instruktør
@@ -54,17 +55,6 @@ public class Movie implements IEntity {
     @ToString.Exclude
     private Set<Genre> genres = new HashSet<>();
 
-    public Movie(int id, String title, LocalDate releaseDate, double popularity, double averageRating, Director director, Set<Actor> actors, Set<Genre> genres) {
-        this.id = id;
-        this.title = title;
-        this.releaseDate = releaseDate;
-        this.popularity = popularity;
-        this.averageRating = averageRating;
-        this.director = director;
-        this.actors = actors;
-        this.genres = genres;
-    }
-
     //For test, can be deleted if needed
     public Movie(int id, String title, LocalDate releaseDate, double averageRating) {
         this.id = id;
@@ -73,22 +63,8 @@ public class Movie implements IEntity {
         this.averageRating = averageRating;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setRelease_date(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
-    }
-
     @Override
     public int getID() {
         return this.id;
     }
-
-
 }
