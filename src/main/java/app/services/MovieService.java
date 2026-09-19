@@ -1,10 +1,8 @@
 package app.services;
 
-import app.dtos.DirectorDTO;
 import app.dtos.MovieDTO;
 import app.dtos.MovieIdDTO;
 import app.dtos.MovieSearchResultDTO;
-import app.entities.Actor;
 
 import java.util.ArrayList;
 import java.util.List;
