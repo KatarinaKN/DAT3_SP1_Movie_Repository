@@ -1,12 +1,81 @@
 package app.views;
-import app.dtos.GenreDTO;
-import app.dtos.MovieDTO;
 
+import app.config.HibernateConfig;
+import app.dao.MovieDAO;
+import app.dao.GenreDAO;
+
+import app.entities.Actor;
+import app.entities.Genre;
+import app.entities.Movie;
+import jakarta.persistence.EntityManagerFactory;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MoviePrinter {
+    EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    MovieDAO movieDAO = new MovieDAO(emf);
+    GenreDAO genreDAO = new GenreDAO(emf);
 
-    public void printMovieDetails (MovieDTO movieDTO) {
+    public void printAllMovies() {
+        List<Movie> allMovies = movieDAO.readAll();
+        System.out.println("Alle film:");
+        for (Movie m : allMovies) {
+            System.out.println("\t" + m.getTitle());
+            System.out.println("\tInstruktør: " + (m.getDirector() != null ? m.getDirector().getName() : "Ukendt"));
+            //Skuespillere, kommasepareret
+            String actorNames = m.getActors().stream()
+                    .map(Actor::getName)
+                    .collect(Collectors.joining(", "));
+            System.out.println("\tSkuespillere: " + (actorNames.isEmpty() ? "Ingen" : actorNames));
+            System.out.println();
+        }
+    }
+
+    public void printGenres() {
+        List <Genre> genres = genreDAO.readAll();
+        System.out.println("Alle genrer:");
+        for (Genre g : genres) {
+            System.out.println("\t" + g.getName());
+        }
+    }
+    /*
+    //Metode findes ikke i dao-laget
+    public void printFindMovieByKeyword() {
+        String keyword = "sommer";  //Der er en film fra 2025 med sommer i titel
+        List<Movie> moviesWithKeyword = movieDAO.[metodefraDAO(keyword)]
+        System.out.println("Film med " + keyword + ": ");
+        for (Movie m : moviesWithKeyword) {
+        System.out.println("\t" + m.getName());
+      }
+     */
+
+    public void printFindMoviesByGenre() {
+        String genre = "Thriller";
+        List<Movie> moviesByGenre = movieDAO.getMovieByGenre(genre);
+        System.out.println("Film i genre " + genre + ":");
+        for (Movie m : moviesByGenre){
+            System.out.println("\t" + m.getTitle());
+        }
+        System.out.println();
+    }
+
+    public void printTopTenLowestRating() {
+        System.out.println("Top 10 laveste rating:");
+        for (Movie m : movieDAO.sortByLowestRating()) {
+            System.out.println("\t" + m.getTitle() + " - Rating: " + m.getAverageRating());
+        }
+        System.out.println();
+
+        System.out.println("Top 10 højeste rating:");
+        for (Movie m : movieDAO.sortByHighestRating()) {
+            System.out.println("\t" + m.getTitle() + " - Rating: " + m.getAverageRating());
+        }
+        System.out.println();
+    }
+
+
+   /* public void printMovieDetails (MovieDTO movieDTO) {
         if (movieDTO == null) {
             System.out.println("Ingen film at vise");
             return;
@@ -35,6 +104,8 @@ public class MoviePrinter {
         System.out.println("Popularitet: " + movieDTO.getPopularity());
         System.out.println("===================== ========");
     }
+
+    */
 
 }
 
