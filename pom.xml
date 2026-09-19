@@ -50,6 +50,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--  HTTP status  -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>6.1.13</version>
+        </dependency>
+
         <!-- Jackson for JSON handling -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
