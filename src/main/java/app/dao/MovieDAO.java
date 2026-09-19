@@ -67,7 +67,7 @@ public class MovieDAO extends GenericDAO<Movie, Integer> {
     /**
      * Find a movie based on the movie title.
      * @param movieName the movie title you want to search for
-     * @return a list of movies
+     * @return a list of movies, emptyList if none exist
      * @throws ApiException if movieName is null (status code 400)
      */
     public List<Movie> getMovieByName(String movieName){
