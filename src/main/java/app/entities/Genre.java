@@ -9,7 +9,6 @@ import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 @Table(name="genres")
 @Getter
