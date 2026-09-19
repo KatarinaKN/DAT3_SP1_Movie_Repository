@@ -116,7 +116,7 @@ class GenericDAOTest {
 
         //Update user 1
         fetchedMovie1.setAverageRating(8);
-        fetchedMovie1.setRelease_date(LocalDate.of(1998, 4, 27));
+        fetchedMovie1.setReleaseDate(LocalDate.of(1998, 4, 27));
         fetchedMovie1.setTitle("Peter Plys");
 
         //Update
