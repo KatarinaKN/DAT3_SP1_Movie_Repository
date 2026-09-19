@@ -1,6 +1,7 @@
 package app.entities;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "movies")
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @ToString
 public class Movie implements IEntity {
     @Id
