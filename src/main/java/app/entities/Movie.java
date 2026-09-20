@@ -44,8 +44,9 @@ public class Movie implements IEntity {
     @ToString.Exclude
     private Set<Actor> actors = new HashSet<>();
 
-    //Mange film har mange genrer
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    //Mange film har mange genrer.
+    // Ændret LAZY to EAGER fordi Hibernate lukker til db efter at have hentet film og får ikke genrer med
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             //Navn på koblingstabel er movie_genre. Det er standardkonvetion i JPA/SQL at navngive sådan
             name = "movie_genre",

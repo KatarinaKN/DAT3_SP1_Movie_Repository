@@ -52,6 +52,13 @@ public class MovieService {
             MovieDTO result = apiService.fetchAndConvert(url, MovieDTO.class);
             allMovies.add(result);
         }
+        //sat ind her fordi så bliver applikationen ikke smidt af TMBD. /Stine
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
 
         return allMovies;
     }
