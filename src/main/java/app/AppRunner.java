@@ -1,23 +1,21 @@
 package app;
 
-import app.dtos.MovieDTO;
 import app.services.MovieService;
 import app.views.MoviePrinter;
-
-
-import java.util.List;
 
 public class AppRunner {
 
     public void run() {
         MovieService movieService = new MovieService();
         MoviePrinter printer = new MoviePrinter();
-        List<MovieDTO> movies = movieService.getMovies();
+        //Nedenstående fetcher data fra TMDb hver gang, applikation startes
+       // List<MovieDTO> movies = movieService.getMovies();
 
 
-       // printer.printFindMoviesByGenre();
+      // printer.printFindMoviesByGenre();
        // printer.printAllMovies();
-        printer.printTopTenLowestRating();
+        //printer.printTopTenLowestRating();
+        printer.printFindMovieByKeyword();
 
             /*
         //Test af print af tre film

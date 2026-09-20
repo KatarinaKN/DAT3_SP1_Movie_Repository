@@ -26,7 +26,7 @@ public final class HibernateConfig {
         Properties props = HibernateBaseProperties.createBase();
 
         // Teaching-friendly default - change to update in production
-        // 2026_09_20 ændret til update / stine
+        // 2026_09_20 ændret til update
         props.put("hibernate.hbm2ddl.auto", "update");
 
         if (System.getenv("DEPLOYED") != null) {

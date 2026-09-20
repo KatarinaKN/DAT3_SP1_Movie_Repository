@@ -60,6 +60,23 @@ public class MovieDAO extends GenericDAO<Movie, Integer> {
                 filter(m -> m.getGenres().stream()
                                 .anyMatch(g -> g.getName().equalsIgnoreCase(genre))).
                 toList();
+    }
+
+    public List<Movie> getMovieByName(String movieName){
+        if(movieName == null){
+            throw new ApiException(HttpStatus.BAD_REQUEST.value(), "Search bar can't be null");
+        }
+
+        //Get all movies
+        List<Movie> movieList = readAll();
+
+        //Streams list and filter it
+        return movieList.stream()
+                //for each movie, check if equal to param, turn lowercase
+                .filter(m -> m.getTitle().toLowerCase().contains(movieName.toLowerCase()))
+                //return result
+                .toList();
 
     }
+
 }

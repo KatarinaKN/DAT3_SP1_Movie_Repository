@@ -39,16 +39,15 @@ public class MoviePrinter {
             System.out.println("\t" + g.getName());
         }
     }
-    /*
-    //Metode findes ikke i dao-laget
+
     public void printFindMovieByKeyword() {
-        String keyword = "sommer";  //Der er en film fra 2025 med sommer i titel
-        List<Movie> moviesWithKeyword = movieDAO.[metodefraDAO(keyword)]
+        String keyword = "sommer";
+        List<Movie> moviesWithKeyword = movieDAO.getMovieByName(keyword);
         System.out.println("Film med " + keyword + ": ");
         for (Movie m : moviesWithKeyword) {
-        System.out.println("\t" + m.getName());
-      }
-     */
+            System.out.println("\t" + m.getTitle());
+        }
+    }
 
     public void printFindMoviesByGenre() {
         String genre = "Thriller";

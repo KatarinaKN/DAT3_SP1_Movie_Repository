@@ -27,13 +27,13 @@ public class Movie implements IEntity {
     private double averageRating;
 
     //Mange film har en instruktør
-    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "director_id")
     @ToString.Exclude
     private Director director;
 
     //Mange film har mange skuespillere
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             //Navn på koblingstabel er movie_actor
             name = "movie_actor",
