@@ -33,32 +33,30 @@ public class MoviePrinter {
     }
 
     public void printGenres() {
-        List <Genre> genres = genreDAO.readAll();
+        List<Genre> genres = genreDAO.readAll();
         System.out.println("Alle genrer:");
         for (Genre g : genres) {
             System.out.println("\t" + g.getName());
         }
     }
-    /*
-    //Metode findes ikke i dao-laget
-    public void printFindMovieByKeyword() {
-        String keyword = "sommer";  //Der er en film fra 2025 med sommer i titel
-        List<Movie> moviesWithKeyword = movieDAO.[metodefraDAO(keyword)]
+
+    public void printFindMovieByKeyword(String keyword) {
+        List<Movie> moviesWithKeyword = movieDAO.getMovieByName(keyword);
         System.out.println("Film med " + keyword + ": ");
         for (Movie m : moviesWithKeyword) {
-        System.out.println("\t" + m.getName());
-      }
-     */
+            System.out.println("\t" + m.getTitle());
+        }
+    }
 
-    public void printFindMoviesByGenre() {
-        String genre = "Thriller";
+    public void printFindMoviesByGenre(String genre) {
         List<Movie> moviesByGenre = movieDAO.getMovieByGenre(genre);
         System.out.println("Film i genre " + genre + ":");
-        for (Movie m : moviesByGenre){
+        for (Movie m : moviesByGenre) {
             System.out.println("\t" + m.getTitle());
         }
         System.out.println();
     }
+
 
     public void printTopTenLowestRating() {
         System.out.println("Top 10 laveste rating:");
@@ -66,7 +64,9 @@ public class MoviePrinter {
             System.out.println("\t" + m.getTitle() + " - Rating: " + m.getAverageRating());
         }
         System.out.println();
+    }
 
+    public void printTopTenHighestRating() {
         System.out.println("Top 10 højeste rating:");
         for (Movie m : movieDAO.sortByHighestRating()) {
             System.out.println("\t" + m.getTitle() + " - Rating: " + m.getAverageRating());
@@ -108,5 +108,3 @@ public class MoviePrinter {
     */
 
 }
-
-
