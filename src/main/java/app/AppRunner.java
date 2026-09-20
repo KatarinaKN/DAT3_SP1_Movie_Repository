@@ -9,7 +9,7 @@ import java.util.List;
 public class AppRunner {
 
     public void run() {
-        MovieService movieService = new MovieService();
+       /* MovieService movieService = new MovieService();
         MoviePrinter printer = new MoviePrinter();
 
         List<MovieDTO> movies = movieService.getMovies();
@@ -23,7 +23,7 @@ public class AppRunner {
             if (count==3) {
                 break;
             }
-        }
+        }*/
     }
 
 }
