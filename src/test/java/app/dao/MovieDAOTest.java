@@ -43,6 +43,20 @@ class MovieDAOTest {
             7.6
     );
 
+    Movie movie4 = new Movie(
+            4,
+            "Godfather 1",
+            LocalDate.of(1972, 3, 24),
+            9.2
+    );
+
+    Movie movie5 = new Movie(
+            5,
+            "Godfather 2",
+            LocalDate.of(1974, 12, 20),
+            9.0
+    );
+
 
     @BeforeEach
     void beforeEach() {
@@ -128,5 +142,24 @@ class MovieDAOTest {
     void sortByHighestRating_emptyDatabase_returnsEmptyList() {
         List<Movie> movieList = movieDAO.sortByHighestRating();
         assertThat(movieList, is(empty()));
+    }
+
+    @Test
+    void getMovieByName(){
+        //Create 5 moves, 2 with a "efterfølger"
+        movieDAO.create(movie1);
+        movieDAO.create(movie2);
+        movieDAO.create(movie3);
+        movieDAO.create(movie4);
+        movieDAO.create(movie5);
+
+        //find movie
+       List<Movie> movieList = movieDAO.getMovieByName("Godfather");
+
+       //compare
+        assertThat(movieList, hasSize(2));
+        assertThat(movieList, containsInAnyOrder(movie4, movie5));
+
+
     }
 }
